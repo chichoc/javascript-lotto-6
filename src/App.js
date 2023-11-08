@@ -14,6 +14,8 @@ class App {
 
     const array = await this.getWinningNumbers();
     new Lotto(array);
+
+    const bonus = await this.getBonusNumber(array);
   }
 
   async getPurchaseAmount() {
@@ -37,6 +39,13 @@ class App {
     const input = await Console.readLineAsync(`\n당첨 번호를 입력해 주세요.\n`);
     if (!input.includes(',')) throw new Error('[ERROR] 당첨 번호는 쉼표로 구분한 숫자여야 합니다.');
     return input.split(',').map(Number);
+  }
+
+  async getBonusNumber(arr) {
+    const input = +(await Console.readLineAsync(`\n보너스 번호를 입력해 주세요.\n`));
+    if (isNaN(input)) throw new Error('[ERROR] 보너스 번호는 숫자여야 합니다.');
+    if (arr.includes(input)) throw new Error('[ERROR] 보너스 번호는 당첨 번호와 중복되지 않아야 합니다.');
+    return input;
   }
 }
 
